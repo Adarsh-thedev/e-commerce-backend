@@ -1,8 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
+
+require('dotenv').config();
+
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/tshirt', {
+mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true, 
     useUnifiedTopology: true,
     useCreateIndex : true
@@ -12,7 +15,7 @@ mongoose.connect('mongodb://localhost:27017/tshirt', {
 })
 .catch(err=> console.log(err));
 
-const PORT = 3000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, ()=> {
     console.log(`App is running on PORT ${PORT}`);
 });
