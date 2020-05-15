@@ -64,6 +64,13 @@ exports.signout = (req,res)=>{
     res.clearCookie("token");
     res.json({
         message : "User Signed Out Successfully",
-        Time : Date.now()
     });
 }
+
+//authenticated routes
+exports.isSignedIn = expressJwt({
+    secret : process.env.SECRET,
+    userProperty : "auth"
+});
+
+//custom middlewares
