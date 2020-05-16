@@ -5,7 +5,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
+//my routes
 const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
 
 const app = express();
 
@@ -27,6 +29,7 @@ mongoose.connect(process.env.DATABASE, {
 
 //my routes
 app.use("/api", authRoutes);
+app.use("/api", userRoutes);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, ()=> {
