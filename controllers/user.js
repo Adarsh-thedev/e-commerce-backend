@@ -32,7 +32,7 @@ exports.updateUser = (req,res) => {
                 })
             }
             user.salt = undefined;
-            ruser.encry_password = undefined;
+            user.encry_password = undefined;
             res.json(user);
         }
     )
