@@ -60,7 +60,7 @@ exports.createProduct = (req,res) => {
                     error : "Failed to save product"
                 })
             }
-            return res.json(product);
-        })
+            return res.json(`${product.name} was saved succesfully!`);
+        });
     })
 }
