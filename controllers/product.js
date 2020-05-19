@@ -28,7 +28,20 @@ exports.createProduct = (req,res) => {
             })
         }
 
-        //TODO: restrictions on fields
+        const {name, description, price, category, stock} = fields;
+
+        if(
+            !name ||
+            !description ||
+            !price ||
+            !category ||
+            !stock
+        ) {
+            return res.status(400).json({
+                error : "Please include proper details"
+            })
+        }
+
         let product = new Product(fields);
         if(file.photo) {
             if(file.photo.size > (3 * 1024 * 1024)) {
