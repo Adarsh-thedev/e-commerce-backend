@@ -13,7 +13,7 @@ const {isSignedIn, isAuthenticated, isAdmin} = require('../controllers/auth');
 
 //params
 router.param('userId',getUserById);
-router.param('categroyId',getCategoryById);
+router.param('categoryId',getCategoryById);
 
 //actual routes
 
@@ -21,14 +21,14 @@ router.param('categroyId',getCategoryById);
 router.post('/category/create/:userId', isSignedIn, isAuthenticated, isAdmin, createCatagory);
 
 //read
-router.get('/category/:categroyId', getCategory);
+router.get('/category/:categoryId', getCategory);
 router.get('/categories', getAllCategories);
 
 //update
-router.put('category/:categroyId/:userId', isSignedIn, isAuthenticated, isAdmin, updateCategory);
+router.put('/category/:categoryId/:userId', isSignedIn, isAuthenticated, isAdmin, updateCategory);
 
 //delete
-router.delete('category/:categroyId/:userId', isSignedIn, isAuthenticated, isAdmin, removeCategory);
+router.delete('/category/:categoryId/:userId', isSignedIn, isAuthenticated, isAdmin, removeCategory);
 
 
 module.exports = router;
