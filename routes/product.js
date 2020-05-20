@@ -23,12 +23,14 @@ router.post('/product/create/:userId', isSignedIn, isAuthenticated, isAdmin, cre
 //read routes
 router.get('/product/:productId', getProduct);
 router.get('/product/photo/:productId', photo);
-router.get('/products', getAllProducts);
 
 //delete route
 router.delete('/product/:productId/:userId', isSignedIn, isAuthenticated, isAdmin, deleteProduct);
 
 //update
 router.put('/product/:productId/:userId', isSignedIn, isAuthenticated, isAdmin, updateProduct);
+
+//product listing
+router.get('/products', getAllProducts);
 
 module.exports = router;
