@@ -51,6 +51,10 @@ exports.createProduct = (req,res) => {
             }
             product.photo.data = fs.readFileSync(file.photo.path);
             product.photo.contentType = file.photo.type;
+        } else {
+            return res.json({
+                error : "Please include a phot of product"
+            })
         }
 
         //save to DB
@@ -60,7 +64,21 @@ exports.createProduct = (req,res) => {
                     error : "Failed to save product"
                 })
             }
-            return res.json(`${product.name} was saved succesfully!`);
+            return res.json(`${product.name} was saved successfully!`);
         });
     })
+}
+
+exports.getProduct = (req,res) => {
+    req.product.photo = undefined;
+    return res.json(req.product);
+}
+
+//middleware
+exports.photo = (req,res,next) => {
+    if(req.product.photo.data) {
+        res.set('Content-type', req.product.photo.contentType);
+        res.send(req.product.photo.data);
+    }
+    next();
 }
