@@ -3,6 +3,7 @@ const formidable = require('formidable');
 const _ = require('lodash');
 const fs = require('fs');
 
+//middlewares
 exports.getProductById = (req,res,next,id) => {
     Product.findById(id)
       .populate('category')
@@ -14,6 +15,14 @@ exports.getProductById = (req,res,next,id) => {
         }
         req.product = product;
     })
+    next();
+}
+
+exports.photo = (req,res,next) => {
+    if(req.product.photo.data) {
+        res.set('Content-type', req.product.photo.contentType);
+        res.send(req.product.photo.data);
+    }
     next();
 }
 
@@ -125,11 +134,20 @@ exports.updateProduct = (req,res) => {
     })
 }
 
-//middleware
-exports.photo = (req,res,next) => {
-    if(req.product.photo.data) {
-        res.set('Content-type', req.product.photo.contentType);
-        res.send(req.product.photo.data);
-    }
-    next();
+exports.getAllProducts = (req,res) => {
+    let limit = parseInt(req.query.limit) || 8;
+    let sortBy = req.query.sortBy || '_id';
+    Product.find()
+      .select('-photo')
+      .populate('category')
+      .sort([[sortBy, 'asc']])
+      .limit(limit)
+      .exec((err,products) => {
+          if(err) {
+            return res.status(400).json({
+                error : "Nothing inside products list"
+            })
+          }
+          res.json(products)
+      })
 }
