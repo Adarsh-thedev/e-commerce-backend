@@ -26,6 +26,25 @@ exports.photo = (req,res,next) => {
     next();
 }
 
+exports.updateStock = (req,res,next) => {
+    let myOperations = req.body.order.products.map(prod => {
+        return {
+            updateOne : {
+                filter : {_id : prod._id},
+                update : {$inc : {stock : -prod.count, sold : +prod.count}}
+            }
+        }
+    });
+    Product.bulkWrite(myOperations, {}, (err,products) => {
+        if(err) {
+            return res.status(400).json({
+                error : "Bulk operation failed"
+            })
+        }
+        next();
+    });
+}
+
 //controllers
 exports.createProduct = (req,res) => {
     let form = new formidable.IncomingForm();
