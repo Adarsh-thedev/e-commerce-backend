@@ -39,3 +39,22 @@ exports.getAllOrders = (req,res) => {
           return res.json(order);
       })
 }
+
+exports.getOrderStatus = (req,res) => {
+    return res.json(Order.schema.path('status').enumValues);
+}
+
+exports.updateStatus = (req,res) => {
+    Order.update(
+        {_id : req.order.orderId},
+        {$set : {status : req.body.status}},
+        (err,order) => {
+            if(err) {
+                return res.status(400).json({
+                    error : "Can not update order status"
+                })
+            }
+            return res.json(order);
+        }
+    );
+}
