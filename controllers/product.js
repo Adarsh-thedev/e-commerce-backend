@@ -82,7 +82,7 @@ exports.createProduct = (req,res) => {
             product.photo.contentType = file.photo.type;
         } else {
             return res.json({
-                error : "Please include a phot of product"
+                error : "Please include a photo of product"
             })
         }
 
