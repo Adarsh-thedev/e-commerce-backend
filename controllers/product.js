@@ -14,8 +14,8 @@ exports.getProductById = (req,res,next,id) => {
             });
         }
         req.product = product;
+        next();
     })
-    next();
 }
 
 exports.photo = (req,res,next) => {
